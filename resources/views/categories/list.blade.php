@@ -5,11 +5,12 @@
 @include('categories.create')
 @include('categories.edit')
 
+<div class="p-4">
     <div class="page-header m-4">
         <div class="group-row">
             <div class="row">
             <h1>Categorías</h1>
-            <a href="/categories/add" class="btn btn-success boton-add" title="Add" id="add_category">
+            <a class="btn btn-success boton-add" title="Add" id="add_category">
                     <i class="mdi mdi-plus"></i></a>
             </div>
 
@@ -53,7 +54,7 @@
         <div class="alert alert-warning">
             <b>Atención</b>
             <p>
-                No Hay Categorìas. <a href="/categories/add">Crear una nueva Categoría</a>.
+                No Hay Categorías. <a href="/categories/add">Crear una nueva Categoría</a>.
             </p>
         </div>
     @endif
@@ -102,7 +103,7 @@
             </p>
         </div>
     @endif
-
+</div>
 
 
 @endsection

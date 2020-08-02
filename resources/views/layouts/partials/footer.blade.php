@@ -1,4 +1,4 @@
-<footer class="footer">
+<footer class="footer mt-4 p-4">
           <div class="card">
             <div class="card-body">
               <div class="d-sm-flex justify-content-center justify-content-sm-between py-2">
@@ -7,4 +7,4 @@
               </div>
             </div>
           </div>
-        </footer>
+</footer>

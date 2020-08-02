@@ -21,10 +21,10 @@
 
         <div class="container">
             @yield('content')
+             @include('layouts.partials.footer')
 
         </div>
-    @include('layouts.partials.footer')
-
+   
     </div>
 </div>
 
