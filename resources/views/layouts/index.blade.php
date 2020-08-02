@@ -46,6 +46,6 @@
   <!-- End plugin js for this page -->
   <!-- Custom js for this page-->
   <script src="{{ asset('js/dashboard.js') }}"></script>
-
+  <script src="{{ asset('js/crud.js') }}"></script>
 </body>
 </html>

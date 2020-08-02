@@ -2,11 +2,14 @@
 
 @section('content')
 
+@include('categories.create')
+@include('categories.edit')
+
     <div class="page-header m-4">
         <div class="group-row">
             <div class="row">
             <h1>Categorías</h1>
-            <a href="/categories/add" class="btn btn-success boton-add" title="Add">
+            <a href="/categories/add" class="btn btn-success boton-add" title="Add" id="add_category">
                     <i class="mdi mdi-plus"></i></a>
             </div>
 
