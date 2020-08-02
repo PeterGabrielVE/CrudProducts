@@ -11,13 +11,12 @@
 |
 */
 
-Route::get('/', 'CategoriesController@listCategory');
+Route::get('/', 'CategoriesController@listCategory')->name('categories.list');
+Route::get('categories.list', 'CategoriesController@listCategory')->name('categories.list');
 
 Route::get('/categories', 'CategoriesController@listCategory');
-Route::get('/categories/add', 'CategoriesController@add');
-Route::get('/categories/edit/{id}', 'CategoriesController@edit');
-Route::post('/categories/save', 'CategoriesController@save');
-Route::post('/categories/update', 'CategoriesController@update');
+Route::post('/categories/add', 'CategoriesController@add');
+Route::post('/categories/edit/{id}', 'CategoriesController@edit');
 Route::get('/categories/remove/{id}', 'CategoriesController@remove');
 Route::get('/categories/view/{id}', 'CategoriesController@view');
 

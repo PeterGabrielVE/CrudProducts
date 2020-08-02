@@ -4,6 +4,7 @@
 
 @include('categories.create')
 @include('categories.edit')
+@include('categories.view')
 
 <div class="p-4">
     <div class="page-header m-4">
@@ -23,8 +24,8 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>TITLE</th>
-                    <th>DESCRIPTION</th>
+                    <th>TITULO</th>
+                    <th>DESCRIPCION</th>
                     <th>OPCIONES</th>
                 </tr>
             </thead>
@@ -36,13 +37,13 @@
                     <td>{{ $value->title  }}</td>
                     <td>{{ $value->description  }}</td>
                     <td>
-                        <a href="/categories/view/{{ $value->id }}" class="btn btn-info" title="View">
+                        <a class="btn btn-info" title="View" onclick="showView({{ $value->id  }})">
                             <i class="mdi mdi-eye"></i>
                         </a>
-                        <a href="/categories/edit/{{ $value->id }}" class="btn btn-warning" title="Edit">
+                        <a class="btn btn-warning" title="Edit" onclick="showEdit({{ $value->id  }})">
                             <i class="mdi mdi-pencil"></i>
                         </a>
-                        <a href="/categories/remove/{{ $value->id }}" class="btn btn-danger" title="Delete">
+                        <a class="btn btn-danger" title="Delete" onclick="deleteCategory({{ $value->id  }})">
                             <i class="mdi mdi-delete"></i>
                         </a>
                     </td>
@@ -60,7 +61,14 @@
     @endif
 
     <div class="page-header m-4">
-        <h1>Productos</h1>
+         <div class="group-row">
+            <div class="row">
+            <h1>Productos</h1>
+            <a class="btn btn-success boton-add" title="Add" id="add_category">
+                    <i class="mdi mdi-plus"></i></a>
+            </div>
+
+        </div>
     </div>
 
     @if (count($productos) > 0)
@@ -81,10 +89,10 @@
                     <td>{{ $value->title  }}</td>
                     <td>{{ $value->description  }}</td>
                     <td>
-                        <a href="/categories/view/{{ $value->id }}" class="btn btn-info" title="View">
+                        <a class="btn btn-info" title="View">
                             <i class="mdi mdi-eye"></i>
                         </a>
-                        <a href="/categories/edit/{{ $value->id }}" class="btn btn-warning" title="Edit">
+                        <a class="btn btn-warning" title="Edit" id="edit_category">
                             <i class="mdi mdi-pencil"></i>
                         </a>
                         <a href="/categories/remove/{{ $value->id }}" class="btn btn-danger" title="Delete">
@@ -104,6 +112,188 @@
         </div>
     @endif
 </div>
+
+<script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+<script>
+
+    function showView(id){
+            console.log(id);
+          $("#view_Category").modal("show");
+           $.ajaxSetup({
+                  headers: {
+                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  }
+              });
+            $.ajax({
+                type: "GET",
+                url:"{{ url('/categories/view') }}/"+id,
+                dataType:'json',
+                success: function(data){
+                    console.log(data);
+                    $("#view_title").val(data['title']);
+                    $("#view_description").val(data['description']);
+                    
+                }
+            });
+
+    };// function show vista
+
+
+    function showEdit(id){
+            console.log(id);
+          $('#category_id').val(id);
+          $("#editCategory").modal("show");
+           $.ajaxSetup({
+                  headers: {
+                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  }
+              });
+            $.ajax({
+                type: "GET",
+                url:"{{ url('/categories/view') }}/"+id,
+                dataType:'json',
+                success: function(data){
+                    console.log(data);
+                    $("#edit_title").val(data['title']);
+                    $("#edit_description").val(data['description']);
+                    
+                }
+            });
+
+    };// function show edit
+
+
+    function deleteCategory(id){
+            console.log(id);
+         
+           $.ajaxSetup({
+                  headers: {
+                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  }
+              });
+            $.ajax({
+                type: "GET",
+                url:"{{ url('/categories/remove') }}/"+id,
+                dataType:'json',
+                success: function(data){
+                    console.log(data);
+                     window.location.href = "{{URL::to('categories.list')}}"
+                    
+                }
+            });
+
+    };// function delete
+
+
+    
+    jQuery(document).ready(function(){
+
+    jQuery('#ajaxEditSubmit').click(function(e){
+
+                var id =  $('#category_id').val();
+               e.preventDefault();
+               $(this).html('Sending..');
+
+               $.ajaxSetup({
+                  headers: {
+                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  }
+              });
+               jQuery.ajax({
+                  data: $('#categoryEditForm').serialize(),
+                  url:"{{ url('/categories/edit') }}/"+id,
+                  method: 'post',
+                  dataType: 'json',
+                  success: function(r){
+
+                     $('#categoryEditForm').trigger("reset");
+                     $('#ajaxEditSubmit').html('Save Data');
+
+                     $('#editCategory').modal('hide');
+                    
+                      window.location.href = "{{URL::to('categories.list')}}"
+                      
+
+                    
+
+                  },
+                 error :function( data ) {
+                    console.log('Error:', data);
+                    if( data.status === 422 ) {
+                        var errors = $.parseJSON(data.responseText);
+                        $.each(errors, function (key, value) {
+                        
+                      
+                        $('#ajaxEditSubmit').html('Save Data');
+                            if($.isPlainObject(value)) {
+                                $.each(value, function (key, value) {
+                                    console.log(key+ " " +value);
+                                    
+                                    
+                                });
+                            }
+                        });
+                      }}
+                });
+            }); //edit
+
+
+        jQuery('#ajaxSubmit').click(function(e){
+               e.preventDefault();
+               $(this).html('Sending..');
+
+               $.ajaxSetup({
+                  headers: {
+                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  }
+              });
+               jQuery.ajax({
+                  data: $('#categoryForm').serialize(),
+                  url:"{{ url('/categories/add') }}",
+                  method: 'post',
+                  dataType: 'json',
+                  success: function(r){
+
+                     $('#categoryForm').trigger("reset");
+                     $('#ajaxSubmit').html('Save Data');
+
+                     $('#create').modal('hide');
+                    
+                      window.location.href = "{{URL::to('categories.list')}}"
+                      
+
+                    
+
+                  },
+                 error :function( data ) {
+                    console.log('Error:', data);
+                    if( data.status === 422 ) {
+                        var errors = $.parseJSON(data.responseText);
+                        $.each(errors, function (key, value) {
+                        
+                      
+                        $('#ajaxSubmit').html('Save Data');
+                            if($.isPlainObject(value)) {
+                                $.each(value, function (key, value) {
+                                    console.log(key+ " " +value);
+                                    
+                                    
+                                });
+                            }
+                        });
+                      }}
+                });
+            });
+
+
+
+})
+
+
+
+
+
+</script>
 
 
 @endsection
