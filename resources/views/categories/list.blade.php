@@ -3,11 +3,19 @@
 @section('content')
 
     <div class="page-header m-4">
-        <h1>Categorías</h1>
+        <div class="group-row">
+            <div class="row">
+            <h1>Categorías</h1>
+            <a href="/categories/add" class="btn btn-success boton-add" title="Add">
+                    <i class="mdi mdi-plus"></i></a>
+            </div>
+
+        </div>
     </div>
 
     @if (count($categorias) > 0)
         <table class="table table-hover">
+
             <thead>
                 <tr>
                     <th>ID</th>
@@ -51,7 +59,7 @@
         <h1>Productos</h1>
     </div>
 
-    @if (count($categorias) > 0)
+    @if (count($productos) > 0)
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -63,7 +71,7 @@
             </thead>
 
             <tbody>
-                @foreach($categorias as $key => $value)
+                @foreach($productos as $key => $value)
                 <tr>
                     <td>{{ $value->id  }}</td>
                     <td>{{ $value->title  }}</td>

@@ -21106,4 +21106,16 @@ dl li {
   }
 }
 
+.boton-add {
+
+    margin-left:40rem;
+
+}
+@media (max-width: 991px){
+    .boton-add {
+
+        margin-left:1rem;
+
+    }
+}
 /*# sourceMappingURL=maps/style.css.map */

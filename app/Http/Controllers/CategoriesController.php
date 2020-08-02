@@ -14,10 +14,12 @@ class CategoriesController extends Controller
     //
     public function listCategory () {
         $categorias = Category::all();
+        $productos = Product::all();
 
         return view('categories.list',
             [
-                'categorias' => $categorias
+                'categorias' => $categorias,
+                'productos' => $productos
             ]
         );
     }
