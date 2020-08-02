@@ -21,11 +21,12 @@ Route::get('/categories/remove/{id}', 'CategoriesController@remove');
 Route::get('/categories/view/{id}', 'CategoriesController@view');
 
 Route::get('/products', 'ProductsController@listProduct');
-Route::get('/products/add', 'ProductsController@add');
+Route::post('/products/add', 'ProductsController@add');
 Route::get('/products/edit/{id}', 'ProductsController@edit');
 Route::post('/products/save', 'ProductsController@save');
 Route::post('/products/update', 'ProductsController@update');
 Route::get('/products/remove/{id}', 'ProductsController@remove');
 Route::get('/products/view/{id}', 'ProductsController@view');
 Route::get('/products/br', 'ProductsController@listProduct');
-Route::get('/products/us', 'ProductsController@listProduct');
+Route::get('/product/view/{id}', 'ProductsController@view');
+

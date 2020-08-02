@@ -5,6 +5,10 @@ $(document).ready(function(){
   		  $("#create").modal("show");
 	});
 
+	$("#add_product").click(function(){
+  		  $("#createProduct").modal("show");
+	});
+
 
 });
 

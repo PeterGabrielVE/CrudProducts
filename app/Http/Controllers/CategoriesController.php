@@ -15,13 +15,9 @@ class CategoriesController extends Controller
     public function listCategory () {
         $categorias = Category::all();
         $productos = Product::all();
+        $categories = Category::get()->pluck('id','title')->sort();
 
-        return view('categories.list',
-            [
-                'categorias' => $categorias,
-                'productos' => $productos
-            ]
-        );
+        return view('categories.list',compact('categorias','productos','categories') );
     }
 
     public function view ($id) {

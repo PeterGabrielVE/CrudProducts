@@ -18656,7 +18656,7 @@ address p {
 /* Miscellanoeous */
 body,
 html {
-  overflow-x: hidden;
+  overflow: scroll;
   padding-right: 0 !important;
 }
 
@@ -18667,7 +18667,8 @@ html {
 }
 
 .container-scroller {
-  overflow: hidden;
+   overflow: hidden;
+
 }
 
 pre {

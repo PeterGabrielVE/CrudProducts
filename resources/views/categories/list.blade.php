@@ -5,6 +5,8 @@
 @include('categories.create')
 @include('categories.edit')
 @include('categories.view')
+@include('products.create')
+@include('products.view')
 
 <div class="p-4">
     <div class="page-header m-4">
@@ -59,12 +61,12 @@
             </p>
         </div>
     @endif
-
+    <hr>
     <div class="page-header m-4">
          <div class="group-row">
             <div class="row">
             <h1>Productos</h1>
-            <a class="btn btn-success boton-add" title="Add" id="add_category">
+            <a class="btn btn-success boton-add" title="Add" id="add_product">
                     <i class="mdi mdi-plus"></i></a>
             </div>
 
@@ -76,8 +78,9 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>TITLE</th>
-                    <th>DESCRIPTION</th>
+                    <th>TITULO</th>
+                    <th>DESCRIPCION</th>
+                    <th>CATEGORIA</th>
                     <th>OPCIONES</th>
                 </tr>
             </thead>
@@ -88,14 +91,15 @@
                     <td>{{ $value->id  }}</td>
                     <td>{{ $value->title  }}</td>
                     <td>{{ $value->description  }}</td>
+                     <td>{{ $value->category_id }}</td>
                     <td>
-                        <a class="btn btn-info" title="View">
+                      <a class="btn btn-info" title="View" onclick="showViewProduct({{ $value->id  }})">
                             <i class="mdi mdi-eye"></i>
                         </a>
-                        <a class="btn btn-warning" title="Edit" id="edit_category">
+                        <a class="btn btn-warning" title="Edit" onclick="showEditProduct({{ $value->id  }})">
                             <i class="mdi mdi-pencil"></i>
                         </a>
-                        <a href="/categories/remove/{{ $value->id }}" class="btn btn-danger" title="Delete">
+                        <a class="btn btn-danger" title="Delete" onclick="deleteProduct({{ $value->id  }})">
                             <i class="mdi mdi-delete"></i>
                         </a>
                     </td>
@@ -183,6 +187,29 @@
             });
 
     };// function delete
+
+    function showViewProduct(id){
+            console.log(id);
+          $("#viewProduct").modal("show");
+           $.ajaxSetup({
+                  headers: {
+                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  }
+              });
+            $.ajax({
+                type: "GET",
+                url:"{{ url('/product/view') }}/"+id,
+                dataType:'json',
+                success: function(data){
+                    console.log(data);
+                    $("#view_ptitle").val(data['title']);
+                    $("#view_pdescription").val(data['description']);
+                    $("#view_pcategories").val(data['category_id']);
+                    
+                }
+            });
+
+    };// function show vista
 
 
     
@@ -283,8 +310,54 @@
                         });
                       }}
                 });
-            });
+            });// aggregar category
 
+        jQuery('#ajaxProductSubmit').click(function(e){
+               e.preventDefault();
+               $(this).html('Sending..');
+
+               $.ajaxSetup({
+                  headers: {
+                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  }
+              });
+               jQuery.ajax({
+                  data: $('#productForm').serialize(),
+                  url:"{{ url('/products/add') }}",
+                  method: 'post',
+                  dataType: 'json',
+                  success: function(r){
+
+                     $('#productForm').trigger("reset");
+                     $('#ajaxProductSubmit').html('Save Data');
+
+                     $('#createProduct').modal('hide');
+                    
+                      window.location.href = "{{URL::to('categories.list')}}"
+                      
+
+                    
+
+                  },
+                 error :function( data ) {
+                    console.log('Error:', data);
+                    if( data.status === 422 ) {
+                        var errors = $.parseJSON(data.responseText);
+                        $.each(errors, function (key, value) {
+                        
+                      
+                        $('#ajaxProductSubmit').html('Save Data');
+                            if($.isPlainObject(value)) {
+                                $.each(value, function (key, value) {
+                                    console.log(key+ " " +value);
+                                    
+                                    
+                                });
+                            }
+                        });
+                      }}
+                });
+            });// aggregar category
 
 
 })
