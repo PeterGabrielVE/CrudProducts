@@ -23,7 +23,9 @@
 								</div>
 								<div class="form-group col-12 col-xs-12 m-0" id="description_group">
 									{!! Form::label('Categories', __('Categoría'), ['class'=>'col-form-label s-12']) !!}
-									{!! Form::select('categories',$categories, null, ['class'=>'form-control r-0 light s-12', 'id'=>'categories']) !!}
+									<select id='selectCategory' class="select2-selection select2-selection--multiple" name="category_id[]" multiple="multiple" style='width: 200px;'>
+								  
+								    </select>
 									<span class="categories_span"></span>
 								</div>
 							</div>

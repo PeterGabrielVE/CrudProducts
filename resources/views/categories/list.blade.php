@@ -7,6 +7,8 @@
 @include('categories.view')
 @include('products.create')
 @include('products.view')
+@include('products.edit')
+
 
 <div class="p-4">
     <div class="page-header m-4">
@@ -80,7 +82,7 @@
                     <th>ID</th>
                     <th>TITULO</th>
                     <th>DESCRIPCION</th>
-                    <th>CATEGORIA</th>
+              
                     <th>OPCIONES</th>
                 </tr>
             </thead>
@@ -91,7 +93,7 @@
                     <td>{{ $value->id  }}</td>
                     <td>{{ $value->title  }}</td>
                     <td>{{ $value->description  }}</td>
-                     <td>{{ $value->category_id }}</td>
+                     
                     <td>
                       <a class="btn btn-info" title="View" onclick="showViewProduct({{ $value->id  }})">
                             <i class="mdi mdi-eye"></i>
@@ -117,7 +119,7 @@
     @endif
 </div>
 
-<script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+
 <script>
 
     function showView(id){
@@ -191,6 +193,7 @@
     function showViewProduct(id){
             console.log(id);
           $("#viewProduct").modal("show");
+          
            $.ajaxSetup({
                   headers: {
                      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -205,13 +208,58 @@
                     $("#view_ptitle").val(data['title']);
                     $("#view_pdescription").val(data['description']);
                     $("#view_pcategories").val(data['category_id']);
-                    
+                   
                 }
             });
 
     };// function show vista
 
+    function showEditProduct(id){
+            console.log(id);
+          $('#product_id').val(id);
+          $("#editProduct").modal("show");
+           $.ajaxSetup({
+                  headers: {
+                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  }
+              });
+            $.ajax({
+                type: "GET",
+                url:"{{ url('/products/view') }}/"+id,
+                dataType:'json',
+                success: function(data){
+                    console.log(data);
+                    $("#editar_title").val(data.title);
+                    $("#editar_description").val(data['description']);
+                    $("#edit_pcategories").val(data['category_id']);
+                    $("#product_id").val(data['id']);
+                    
+                }
+            });
 
+    };// function show edit
+
+
+     function deleteProduct(id){
+            console.log(id);
+         
+           $.ajaxSetup({
+                  headers: {
+                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  }
+              });
+            $.ajax({
+                type: "GET",
+                url:"{{ url('/products/remove') }}/"+id,
+                dataType:'json',
+                success: function(data){
+                    console.log(data);
+                     window.location.href = "{{URL::to('categories.list')}}"
+                    
+                }
+            });
+
+    };// function delete
     
     jQuery(document).ready(function(){
 
@@ -358,6 +406,55 @@
                       }}
                 });
             });// aggregar category
+
+        jQuery('#ajaxEditProductSubmit').click(function(e){
+
+                var id =  $('#product_id').val();
+               e.preventDefault();
+               $(this).html('Sending..');
+
+               $.ajaxSetup({
+                  headers: {
+                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  }
+              });
+               jQuery.ajax({
+                  data: $('#productEditForm').serialize(),
+                  url:"{{ url('/products/edit') }}/"+id,
+                  method: 'post',
+                  dataType: 'json',
+                  success: function(r){
+
+                     $('#productEditForm').trigger("reset");
+                     $('#ajaxEditProductSubmit').html('Save Data');
+
+                     $('#editProduct').modal('hide');
+                    
+                      window.location.href = "{{URL::to('categories.list')}}"
+                      
+
+                    
+
+                  },
+                 error :function( data ) {
+                    console.log('Error:', data);
+                    if( data.status === 422 ) {
+                        var errors = $.parseJSON(data.responseText);
+                        $.each(errors, function (key, value) {
+                        
+                      
+                        $('#ajaxEditSubmit').html('Save Data');
+                            if($.isPlainObject(value)) {
+                                $.each(value, function (key, value) {
+                                    console.log(key+ " " +value);
+                                    
+                                    
+                                });
+                            }
+                        });
+                      }}
+                });
+            }); //edit
 
 
 })

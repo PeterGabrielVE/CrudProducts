@@ -12,6 +12,11 @@
     <link href="{{ asset('vendors/mdi/css/materialdesignicons.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendors/css/vendor.bundle.base.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.full.min.js" defer></script>
 
 </head>
 <body>
@@ -48,5 +53,20 @@
   <!-- Custom js for this page-->
   <script src="{{ asset('js/dashboard.js') }}"></script>
   <script src="{{ asset('js/crud.js') }}"></script>
+  <!-- Script -->
+    <script type="text/javascript">
+
+    $(document).ready(function() {
+    $('#selectCategory').select2({
+       
+        ajax: {
+            url: '{{ route("getAllCategories") }}',
+            dataType: 'json',
+        },
+    });
+});    
+
+
+    </script>
 </body>
 </html>
