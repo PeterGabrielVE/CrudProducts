@@ -7,7 +7,7 @@
 @include('categories.view')
 @include('products.create')
 @include('products.view')
-@include('products.edit')
+
 
 
 <div class="p-4">
@@ -30,6 +30,7 @@
                     <th>ID</th>
                     <th>TITULO</th>
                     <th>DESCRIPCION</th>
+                    
                     <th>OPCIONES</th>
                 </tr>
             </thead>
@@ -40,6 +41,7 @@
                     <td>{{ $value->id  }}</td>
                     <td>{{ $value->title  }}</td>
                     <td>{{ $value->description  }}</td>
+
                     <td>
                         <a class="btn btn-info" title="View" onclick="showView({{ $value->id  }})">
                             <i class="mdi mdi-eye"></i>
@@ -82,18 +84,23 @@
                     <th>ID</th>
                     <th>TITULO</th>
                     <th>DESCRIPCION</th>
-              
+                    <th>CATEGORIA</th>
                     <th>OPCIONES</th>
                 </tr>
             </thead>
 
             <tbody>
-                @foreach($productos as $key => $value)
+                @foreach($product as $key => $value)
                 <tr>
                     <td>{{ $value->id  }}</td>
                     <td>{{ $value->title  }}</td>
                     <td>{{ $value->description  }}</td>
-                     
+                     <td>
+                        @foreach ($value->categories as $element)
+                              <span class="badge badge-primary r-5">{{ $element->title }}</span>
+                              @endforeach
+
+                     </td>
                     <td>
                       <a class="btn btn-info" title="View" onclick="showViewProduct({{ $value->id  }})">
                             <i class="mdi mdi-eye"></i>

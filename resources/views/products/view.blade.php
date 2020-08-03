@@ -21,11 +21,7 @@
 									{!! Form::text('description', null, ['class'=>'form-control r-0 light s-12', 'id'=>'view_pdescription','readonly']) !!}
 									<span class="vdescription_span"></span>
 								</div>
-								<div class="form-group col-12 col-xs-12 m-0" id="vcategories_group">
-									{!! Form::label('Categories', __('Categoría'), ['class'=>'col-form-label s-12']) !!}
-									{!! Form::select('categories',$categories, null, ['class'=>'form-control r-0 light s-12', 'id'=>'view_pcategories','disabled']) !!}
-									<span class="vcategories_span"></span>
-								</div>
+								
 							</div>
 						
 						</div>

@@ -26,7 +26,7 @@ class ProductsController extends Controller
         $product->description = $request->description;
         $product->category_id = $request->categories;
         $product->save();
-
+        $product->categories()->attach($request->input('category_id'));
         $message = "Producto fue creado exitosamente.";
 
         return response()->json($message);
@@ -64,6 +64,28 @@ class ProductsController extends Controller
 
         return view('products.list',compact('categorias','productos','categories','product') );
     }
+
+    public function update (Request $request) {
+        $product = Product::find($request->id);
+        $product->title = $request->title;
+        $product->description = $request->description;
+        
+
+        $product->save();
+        $product->categories()->sync($request->input('category_id'));
+       
+
+        $categorias = Category::all();
+        $productos = Product::all();
+        $product    = $this->product->find($request->id);
+        
+        $categories = DB::table('categories')->pluck('title','id')->sort();
+        
+
+        return view('products.list',compact('categorias','productos','categories','product') );
+    }
+
+
 
     public function remove ($id) {
         $product = Product::find($id);

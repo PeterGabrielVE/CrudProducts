@@ -26,10 +26,10 @@ Route::get('/products', 'ProductsController@listProduct');
 Route::post('/products/add', 'ProductsController@add');
 Route::get('/product/edit/{id}', 'ProductsController@editProduct')->where('id', '[0-9]+')->name('product.show');
 Route::post('/products/edit/{id}', 'ProductsController@edit');
-Route::post('products/edit/{id}', 'ProductsController@edit');
 Route::post('/products/save', 'ProductsController@save');
-Route::post('/products/update', 'ProductsController@update');
 Route::get('/products/remove/{id}', 'ProductsController@remove');
 Route::get('/products/view/{id}', 'ProductsController@view');
 Route::get('/product/view/{id}', 'ProductsController@view');
+Route::post('/products/update/{id}', 'ProductsController@update')->name('product.update');
+
 

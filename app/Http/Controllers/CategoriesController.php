@@ -27,7 +27,7 @@ class CategoriesController extends Controller
     public function listCategory () {
         $categorias = Category::all();
         $productos = Product::all();
-        $product    = $this->product;
+        $product    = $this->product->all();
         //$categories = Category::get()->pluck('id','title')->sort();
         $categories = DB::table('categories')->pluck('title','id')->sort();
         //dd($categories);
