@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Category;
 use Image;
 use App\Product;
+use DB;
 
 class ProductsController extends Controller
 {
@@ -50,6 +51,18 @@ class ProductsController extends Controller
         $message = "Categoría fue editada exitosamente.";
 
         return response()->json($message);
+    }
+
+       public function editProduct ($id) {
+        //dd($id);
+        $categorias = Category::all();
+        $productos = Product::all();
+        $product    = $this->product->find($id);
+        //$categories = Category::get()->pluck('id','title')->sort();
+        $categories = DB::table('categories')->pluck('title','id')->sort();
+        //dd($categories);
+
+        return view('products.list',compact('categorias','productos','categories','product') );
     }
 
     public function remove ($id) {

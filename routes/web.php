@@ -24,7 +24,9 @@ Route::get('/categories/view/{id}', 'CategoriesController@view');
 
 Route::get('/products', 'ProductsController@listProduct');
 Route::post('/products/add', 'ProductsController@add');
+Route::get('/product/edit/{id}', 'ProductsController@editProduct')->where('id', '[0-9]+')->name('product.show');
 Route::post('/products/edit/{id}', 'ProductsController@edit');
+Route::post('products/edit/{id}', 'ProductsController@edit');
 Route::post('/products/save', 'ProductsController@save');
 Route::post('/products/update', 'ProductsController@update');
 Route::get('/products/remove/{id}', 'ProductsController@remove');

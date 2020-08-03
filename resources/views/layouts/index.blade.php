@@ -64,6 +64,14 @@
             dataType: 'json',
         },
     });
+
+     $('#select_category_id').select2({
+       
+        ajax: {
+            url: '{{ route("getAllCategories") }}',
+            dataType: 'json',
+        },
+    });
 });    
 
 

@@ -98,7 +98,7 @@
                       <a class="btn btn-info" title="View" onclick="showViewProduct({{ $value->id  }})">
                             <i class="mdi mdi-eye"></i>
                         </a>
-                        <a class="btn btn-warning" title="Edit" onclick="showEditProduct({{ $value->id  }})">
+                        <a class="btn btn-warning" title="Edit" href="{{ route('product.show',$value->id) }}"">
                             <i class="mdi mdi-pencil"></i>
                         </a>
                         <a class="btn btn-danger" title="Delete" onclick="deleteProduct({{ $value->id  }})">
