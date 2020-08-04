@@ -24,7 +24,6 @@ class ProductsController extends Controller
         $product = new Product();
         $product->title = $request->title;
         $product->description = $request->description;
-        $product->category_id = $request->categories;
         $product->save();
         $product->categories()->attach($request->input('category_id'));
         $message = "Producto fue creado exitosamente.";
