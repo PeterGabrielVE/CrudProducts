@@ -7,7 +7,7 @@
 			</div>
 			<form id="productForm" name="productForm" class="form-horizontal">
 			<div class="modal-body">
-				
+
 					<div class="form-row">
 						<div class="col-md-12 col-xs-12">
 							<div class="form-row">
@@ -21,29 +21,29 @@
 									{!! Form::text('description', null, ['class'=>'form-control r-0 light s-12', 'id'=>'pdescription']) !!}
 									<span class="description_span"></span>
 								</div>
-								<div class="form-group col-12 col-xs-12 m-0" id="description_group">
-									{!! Form::label('Categories', __('Categoría'), ['class'=>'col-form-label s-12']) !!}
-									<select id='selectCategory' class="select2-selection select2-selection--multiple" name="category_id[]" multiple="multiple" style='width: 200px;'>
-								  
+								<div class="form-group col-12 col-xs-12 mt-2" id="categories_group">
+									{!! Form::label('Categories', __('Categoría'), ['class'=>'col-form-label col-12 s-12']) !!}
+									<select id='selectCategory' class="select2 form-control r-0 light col-12 s-12" name="category_id[]" multiple="multiple" style="width:50%">
+
 								    </select>
 									<span class="categories_span"></span>
 								</div>
 							</div>
-						
+
 						</div>
-						
-							
+
+
 					</div>
-					
-				
+
+
 			</div>
 			</form>
-		
+
 			<br>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">{{__('Close') }}</button>
 				<button type="submit" class="btn btn-primary" id="ajaxProductSubmit"><i class="icon-save mr-2"></i>{{__('Save data')}}</button>
-				
+
 
 			</div>
 		</div>
